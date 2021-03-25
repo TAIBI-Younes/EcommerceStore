@@ -1,10 +1,7 @@
-package com.ecommerce.store.models;
+package com.ecommerce.store.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,15 +10,24 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table
-public class OrderItem {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+@EqualsAndHashCode
+public class CommandItem {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @ManyToOne
     private Product product;
+
+    @Column
     private int quantity;
+
+    @Column
     private double price;
+
     @ManyToOne
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Order order;
+    @JoinColumn(name="command_id", nullable=false)
+    private Command command;
 }
