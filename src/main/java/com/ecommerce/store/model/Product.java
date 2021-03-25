@@ -1,9 +1,6 @@
-package com.ecommerce.store.models;
+package com.ecommerce.store.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,9 +8,10 @@ import java.io.Serializable;
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
 @Table(name="product")
+@EqualsAndHashCode
 public class Product implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column
@@ -36,9 +34,11 @@ public class Product implements Serializable {
 
     @Column
     private String photoName;
+
     @Transient
     private int quantity=1;
+
     @ManyToOne
-    @JoinColumn(name = "catogory_id", updatable = false, insertable = false)
+    @JoinColumn(name = "category_id")
     private  Category category;
 }

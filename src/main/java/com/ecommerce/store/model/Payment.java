@@ -1,10 +1,7 @@
-package com.ecommerce.store.models;
+package com.ecommerce.store.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,10 +11,11 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@EqualsAndHashCode
 @Table(name="payment")
 public class Payment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column
@@ -31,6 +29,7 @@ public class Payment {
 
     @OneToOne(mappedBy = "payment")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Order order;
+    @JoinColumn(name = "command_id", referencedColumnName = "id")
+    private Command command;
 
 }
