@@ -6,8 +6,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor @ToString
-@Table(name="product")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Table(name = "product")
 @EqualsAndHashCode
 public class Product implements Serializable {
     @Id
@@ -27,18 +30,15 @@ public class Product implements Serializable {
     private boolean promotion;
 
     @Column
-    private boolean selected;
-
-    @Column
     private boolean available;
 
     @Column
-    private String photoName;
+    private byte[] photo;
 
-    @Transient
-    private int quantity=1;
+    @Column
+    private int quantity ;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private  Category category;
+    private Category category;
 }
