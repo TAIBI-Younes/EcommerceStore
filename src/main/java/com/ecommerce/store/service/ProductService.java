@@ -1,26 +1,24 @@
 package com.ecommerce.store.service;
 
 import com.ecommerce.store.DTO.CommandProduct;
+import com.ecommerce.store.exception.ResourceNotFoundException;
 import com.ecommerce.store.model.Product;
 import com.ecommerce.store.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
 
 @Service
 public class ProductService {
+
+    @Autowired
     private ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
     public Product getProduct(Long id) {
-        return productRepository.findById(id).get();
+        return productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("product with id " + id.toString() + " doesn't exist."));
     }
 
     public Page<Product> getProducts(Map<String, String> filters) {
@@ -32,7 +30,7 @@ public class ProductService {
     }
 
     public Product updateProduct(Long id, Product product) {
-        Product oldProduct = productRepository.findById(id).get();
+        Product oldProduct = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("product with id " + id.toString() + " doesn't exist."));
         oldProduct.setDescription(product.getDescription());
         oldProduct.setCurrentPrice(product.getCurrentPrice());
         oldProduct.setName(product.getName());
@@ -54,18 +52,18 @@ public class ProductService {
     }
 
     public byte[] getPhoto(Long id) {
-        Product product = productRepository.findById(id).get();
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("product with id " + id.toString() + " doesn't exist."));
         return product.getPhoto();
     }
 
     public void uploadPhoto(byte[] image, Long id) {
-        Product product = productRepository.findById(id).get();
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("product with id " + id.toString() + " doesn't exist."));
         product.setPhoto(image);
         productRepository.save(product);
     }
 
     public double getPriceTotal(CommandProduct commandProduct) {
-        Product product = productRepository.findById(commandProduct.getId()).get();
+        Product product = productRepository.findById(commandProduct.getId()).orElseThrow(() -> new ResourceNotFoundException("product with id " + commandProduct.getId().toString() + " doesn't exist."));
         return commandProduct.getQuantity() * product.getCurrentPrice();
     }
 

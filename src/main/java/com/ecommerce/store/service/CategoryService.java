@@ -1,7 +1,9 @@
 package com.ecommerce.store.service;
 
+import com.ecommerce.store.exception.ResourceNotFoundException;
 import com.ecommerce.store.model.Category;
 import com.ecommerce.store.repository.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -11,14 +13,11 @@ import java.util.Map;
 @Service
 public class CategoryService {
 
+    @Autowired
     private CategoryRepository categoryRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
-
     public Category getCategory(Long id) {
-        return categoryRepository.findById(id).get();
+        return categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category with id " + id.toString() + " doesn't exist."));
     }
 
     public Page<Category> getCategories(Map<String, String> filters) {
@@ -30,7 +29,7 @@ public class CategoryService {
     }
 
     public Category updateCategory(Long id, Category category) {
-        Category oldCategory = categoryRepository.findById(id).get();
+        Category oldCategory = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category with id " + id.toString() + " doesn't exist."));
         oldCategory.setDescription(category.getDescription());
         oldCategory.setName(category.getName());
         return categoryRepository.save(oldCategory);
@@ -51,12 +50,12 @@ public class CategoryService {
     }
 
     public byte[] getPhoto(Long id) {
-        Category Category = categoryRepository.findById(id).get();
+        Category Category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category with id " + id.toString() + " doesn't exist."));
         return Category.getPhoto();
     }
 
     public void uploadPhoto(byte[] image, Long id) {
-        Category Category = categoryRepository.findById(id).get();
+        Category Category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category with id " + id.toString() + " doesn't exist."));
         Category.setPhoto(image);
         categoryRepository.save(Category);
     }

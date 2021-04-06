@@ -1,6 +1,7 @@
 package com.ecommerce.store.service;
 
 import com.ecommerce.store.DTO.CommandForm;
+import com.ecommerce.store.exception.ResourceNotFoundException;
 import com.ecommerce.store.model.Client;
 import com.ecommerce.store.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class ClientService {
     ClientRepository clientRepository;
 
     public Client getClient(Long id) {
-        return clientRepository.findById(id).get();
+        return clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("client with id " + id.toString() + " doesn't exist."));
     }
 
     public Page<Client> getClients(Map<String, String> filters) {
@@ -29,7 +30,7 @@ public class ClientService {
     }
 
     public Client updateClient(Long id, Client client) {
-        Client oldClient = clientRepository.findById(id).get();
+        Client oldClient = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("client with id " + id.toString() + " doesn't exist."));
         oldClient.equals(client);
         return clientRepository.save(oldClient);
     }
