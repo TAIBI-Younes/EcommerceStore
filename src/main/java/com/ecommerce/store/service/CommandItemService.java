@@ -1,6 +1,7 @@
 package com.ecommerce.store.service;
 
 import com.ecommerce.store.DTO.CommandProduct;
+import com.ecommerce.store.exception.ResourceNotFoundException;
 import com.ecommerce.store.model.Command;
 import com.ecommerce.store.model.CommandItem;
 import com.ecommerce.store.model.Product;
@@ -19,7 +20,7 @@ public class CommandItemService {
     public void creatCommandItem(CommandProduct commandProduct, Command command){
         CommandItem commandItem =new CommandItem();
         commandItem.setCommand(command);
-        Product product=productRepository.findById(commandProduct.getId()).get();
+        Product product=productRepository.findById(commandProduct.getId()).orElseThrow(() -> new ResourceNotFoundException("product with id " + commandProduct.getId().toString() + " doesn't exist."));
         commandItem.setProduct(product);
         commandItem.setPrice(product.getCurrentPrice());
         commandItem.setQuantity(commandProduct.getQuantity());
