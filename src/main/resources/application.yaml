@@ -1,0 +1,11 @@
+server:
+  port: 8888
+
+spring:
+  datasource:
+    url : jdbc:postgresql://localhost:5432/ecommerce?useSSL=true
+    username : postgres
+    password: 123456789
+  jpa:
+    hibernate:
+      ddl-auto: update
