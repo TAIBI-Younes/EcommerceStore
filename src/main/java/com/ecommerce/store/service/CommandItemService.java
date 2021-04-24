@@ -17,13 +17,13 @@ public class CommandItemService {
     @Autowired
     ProductRepository productRepository;
 
-    public void creatCommandItem(CommandProduct commandProduct, Command command){
+    public CommandItem creatCommandItem(CommandProduct commandProduct, Command command){
         CommandItem commandItem =new CommandItem();
         commandItem.setCommand(command);
         Product product=productRepository.findById(commandProduct.getId()).orElseThrow(() -> new ResourceNotFoundException("product with id " + commandProduct.getId().toString() + " doesn't exist."));
         commandItem.setProduct(product);
         commandItem.setPrice(product.getCurrentPrice());
         commandItem.setQuantity(commandProduct.getQuantity());
-        commandItemRepository.save(commandItem);
+        return commandItemRepository.save(commandItem);
     }
 }

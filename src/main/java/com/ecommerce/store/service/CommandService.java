@@ -10,16 +10,18 @@ import java.util.Date;
 
 @Service
 public class CommandService {
+
     @Autowired
     CommandRepository commandRepository;
 
-    public Command addCommand(Client client){
+    public Command addCommandByClient(Client client){
         Command command=new Command();
         command.setClient(client);
         command.setDate(new Date());
         return commandRepository.save(command);
     }
-    public Command addCommand(Command command){
+
+    public Command addCommandByClient(Command command){
         return commandRepository.save(command);
     }
 

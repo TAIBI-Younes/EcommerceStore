@@ -21,8 +21,8 @@ public class ProductController {
     }
 
     @PutMapping(path = "/products/uploadPhoto/{id}")
-    public void uploadPhoto(@RequestBody byte[] image, @PathVariable Long id) throws Exception {
-        productService.uploadPhoto(image, id);
+    public Product uploadPhoto(@RequestBody byte[] image, @PathVariable Long id) {
+        return productService.uploadPhoto(image, id);
     }
 
     @GetMapping("/products/{id}")
@@ -50,9 +50,5 @@ public class ProductController {
         return productService.deleteProduct(id);
     }
 
-    @DeleteMapping("/products")
-    public void deleteProduct(@RequestBody Product product) {
-        productService.deleteProduct(product);
-    }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@RestController
 public class ClientController {
     @Autowired
     ClientService clientService;
