@@ -26,14 +26,14 @@ public class CommandController {
     @PostMapping("/commands")
     public Command saveCommand(@RequestBody CommandForm commandForm){
         Client client=clientService.addClientFromCommand(commandForm);
-        Command command=commandService.addCommand(client);
+        Command command=commandService.addCommandByClient(client);
         double total=0;
         for(CommandProduct commandProduct:commandForm.getProducts()){
             commandItemService.creatCommandItem(commandProduct,command);
             total+=productService.getPriceTotal(commandProduct);
         }
         command.setTotalAmount(total);
-        return commandService.addCommand(command);
+        return commandService.addCommandByClient(command);
     }
 
 }

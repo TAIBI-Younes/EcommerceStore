@@ -12,7 +12,7 @@ import java.util.Collection;
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor@EqualsAndHashCode
 @Table(name = "category")
-public class Category implements Serializable {
+public class Category extends Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

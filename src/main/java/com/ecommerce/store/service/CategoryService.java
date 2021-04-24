@@ -54,10 +54,10 @@ public class CategoryService {
         return Category.getPhoto();
     }
 
-    public void uploadPhoto(byte[] image, Long id) {
+    public Category uploadPhoto(byte[] image, Long id) {
         Category Category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category with id " + id.toString() + " doesn't exist."));
         Category.setPhoto(image);
-        categoryRepository.save(Category);
+        return categoryRepository.save(Category);
     }
 
 }

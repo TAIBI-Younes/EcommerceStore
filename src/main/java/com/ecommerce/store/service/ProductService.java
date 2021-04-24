@@ -43,23 +43,15 @@ public class ProductService {
         return product;
     }
 
-    public void deleteProduct(Product product) {
-        productRepository.delete(product);
-    }
-
-    public void deleteAllProduct() {
-        productRepository.deleteAll();
-    }
-
     public byte[] getPhoto(Long id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("product with id " + id.toString() + " doesn't exist."));
         return product.getPhoto();
     }
 
-    public void uploadPhoto(byte[] image, Long id) {
+    public Product uploadPhoto(byte[] image, Long id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("product with id " + id.toString() + " doesn't exist."));
         product.setPhoto(image);
-        productRepository.save(product);
+        return productRepository.save(product);
     }
 
     public double getPriceTotal(CommandProduct commandProduct) {

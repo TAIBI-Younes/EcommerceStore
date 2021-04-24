@@ -3,6 +3,7 @@ package com.ecommerce.store.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Data
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @ToString
 @EqualsAndHashCode
 @Table(name = "client")
-public class Client {
+public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
