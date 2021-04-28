@@ -8,6 +8,7 @@ import com.ecommerce.store.model.Product;
 import com.ecommerce.store.repository.CommandItemRepository;
 import com.ecommerce.store.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +18,7 @@ public class CommandItemService {
     @Autowired
     ProductRepository productRepository;
 
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public CommandItem creatCommandItem(CommandProduct commandProduct, Command command){
         CommandItem commandItem =new CommandItem();
         commandItem.setCommand(command);
