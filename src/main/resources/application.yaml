@@ -9,3 +9,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+keycloak:
+  auth-server-url: http://localhost:7777/auth
+  realm: ecommerce
+  resource: ecommerce
+  public-client: true
+  cors: true
