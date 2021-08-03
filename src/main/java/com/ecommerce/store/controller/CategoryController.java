@@ -21,7 +21,7 @@ public class CategoryController {
     }
 
     @PutMapping(path = "/categories/uploadPhoto/{id}")
-    public void uploadPhoto(@RequestBody byte[] image, @PathVariable Long id) throws Exception {
+    public void uploadPhoto(@RequestBody byte[] image, @PathVariable Long id) {
         categoryService.uploadPhoto(image, id);
     }
 
